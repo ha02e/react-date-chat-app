@@ -1,17 +1,10 @@
-import React from 'react';
+import React from "react";
+import PrevButton from "../components/PrevButton";
 
 const Chat = () => {
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
-      {/* START:뒤로가기 버튼 */}
-      <button
-        type="button"
-        className="text-none absolute top-6 left-4 px-4 py-2"
-      >
-        <img src="./images/arrow-prev.svg" alt="뒤로가기" className="block" />
-        뒤로가기
-      </button>
-      {/* END:뒤로가기 버튼 */}
+      <PrevButton />
       <div className="h-full flex flex-col">
         {/* START:헤더 영역 */}
         <div className="-mx-6 -mt-10 py-7 bg-date-blue-600">
