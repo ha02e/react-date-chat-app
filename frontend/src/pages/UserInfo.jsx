@@ -1,10 +1,13 @@
 import React from "react";
 import Title from "../components/Title";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const UserInfo = () => {
-  // logic
+  const navigate = useNavigate();
+
   const handleClick = () => {
-    console.log("handleClick");
+    navigate("/partner-info");
   };
 
   // view
@@ -138,18 +141,7 @@ const UserInfo = () => {
           {/* END:input 영역 */}
         </form>
         {/* END:info 영역 */}
-
-        {/* START:Button 영역 */}
-        <div className="mt-auto py-12 w-full flex justify-center">
-          <button
-            className="w-full py-4 px-1 block bg-date-pink-700 rounded-3xl text-white text-sm font-medium"
-            type="button"
-            onClick={handleClick}
-          >
-            Next
-          </button>
-        </div>
-        {/* END:Button 영역 */}
+        <Button text={"다음"} onClick={handleClick} />
       </div>
     </div>
   );

@@ -1,14 +1,15 @@
 import React from "react";
 import Title from "../components/Title";
+import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  // logic
+  const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log("Click");
+    navigate("/user-info");
   };
 
-  // view
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
       <i className="w-168 h-168 rounded-full bg-date-pink-500 fixed -z-10 -left-60 -top-56"></i>
@@ -16,17 +17,13 @@ const Home = () => {
         <img src="./images/hero.png" alt="hero" />
       </div>
       <div className="h-full flex flex-col">
-        {/* START:타이틀 영역 */}
         <Title
           mainTitle={"소개팅 1초전"}
           subTitle={
             "소개팅 전, 어떤 얘기를 해야되나 고민되시나요? 미리 연습하고 가보세요!"
           }
         />
-        {/* END:타이틀 영역 */}
-        {/* START:Button 영역 */}
-
-        {/* END:Button 영역 */}
+        <Button text={"시작하기"} onClick={handleClick} />
       </div>
     </div>
   );
