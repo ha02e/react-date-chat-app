@@ -19,9 +19,6 @@ function App() {
         <Route path="/partner-info" element={<PartnerInfo />} />
         <Route path="/chat" element={<Chat />} />
       </Routes>
-      <button type="button" onClick={goUserInfo}>
-        user info
-      </button>
     </div>
   );
 }
