@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import PrevButton from "../components/PrevButton";
+import RadioGroup from "../components/RadioGroup";
+import { genderList } from "../data/common";
+import { initialUserInfo } from "../data/initialState";
 
 const UserInfo = () => {
   const navigate = useNavigate();
 
+  //백엔드에 보내줄 데이터
+  const [userInfo, setUserInfo] = useState(initialUserInfo);
+
   const handleClick = () => {
     navigate("/partner-info");
   };
+
+  const handleGenderData = (gender) => {
+    const resultData = { ...userInfo, gender };
+    setUserInfo(resultData);
+  };
+
+  useEffect(() => {
+    console.log("userInfo : ", userInfo);
+  }, [userInfo]); //userInfo 값이 변경될 때마다 콜백함수 실행
 
   // view
   return (
@@ -21,52 +36,11 @@ const UserInfo = () => {
         {/* START:info 영역 */}
         <form className="pt-20">
           {/* START:성별 체크 */}
-          <div className="flex py-8">
-            <div className="w-full text-center">
-              <label htmlFor="male" className="peer-checked:bg-red-500">
-                <input
-                  id="male"
-                  type="radio"
-                  name="gender"
-                  value={"남자"}
-                  className="hidden peer"
-                />
-                <div className="pb-4 grayscale peer-checked:grayscale-0">
-                  <img
-                    src="./images/male.svg"
-                    alt="male"
-                    className="block w-3/5 mx-auto"
-                  />
-                </div>
-                <span className="w-5 h-5 inline-block align-middle rounded bg-date-gray-200 peer-checked:bg-date-blue-500">
-                  <i className="block w-full h-full bg-[url('../public/images/check.svg')] bg-no-repeat bg-center"></i>
-                </span>
-                <span className="inline-block align-middle px-2">남자</span>
-              </label>
-            </div>
-            <div className="w-full text-center">
-              <label htmlFor="female" className="peer-checked:bg-red-500">
-                <input
-                  id="female"
-                  type="radio"
-                  name="gender"
-                  value={"여자"}
-                  className="hidden peer"
-                />
-                <div className="pb-4 w-3/5 mx-auto grayscale peer-checked:grayscale-0">
-                  <img
-                    src="./images/female.svg"
-                    alt="female"
-                    className="block"
-                  />
-                </div>
-                <span className="w-5 h-5 inline-block align-middle rounded bg-date-gray-200 peer-checked:bg-date-blue-500">
-                  <i className="block w-full h-full bg-[url('../public/images/check.svg')] bg-no-repeat bg-center"></i>
-                </span>
-                <span className="inline-block align-middle px-2">여자</span>
-              </label>
-            </div>
-          </div>
+          <RadioGroup
+            items={genderList}
+            defaultCheckedData={userInfo.gender}
+            onChange={handleGenderData}
+          />
           {/* END:성별 체크 */}
           {/* START:input 영역 */}
           <div>
