@@ -22,11 +22,10 @@ const UserInfo = () => {
     setUserInfo(resultData);
   };
 
-  useEffect(() => {
-    console.log("userInfo : ", userInfo);
-  }, [userInfo]); //userInfo 값이 변경될 때마다 콜백함수 실행
+  // useEffect(() => {
+  //   console.log("userInfo : ", userInfo);
+  // }, [userInfo]); //userInfo 값이 변경될 때마다 콜백함수 실행
 
-  // view
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
       <i className="w-168 h-168 rounded-full bg-date-pink-500 fixed -z-10 -left-60 -top-104"></i>
@@ -35,13 +34,11 @@ const UserInfo = () => {
         <Title mainTitle={"당신을 알려주세요"} />
         {/* START:info 영역 */}
         <form className="pt-20">
-          {/* START:성별 체크 */}
           <RadioGroup
             items={genderList}
             defaultCheckedData={userInfo.gender}
             onChange={handleGenderData}
           />
-          {/* END:성별 체크 */}
           {/* START:input 영역 */}
           <div>
             <div className="py-2 first:pt-0 last:pb-0 ">
