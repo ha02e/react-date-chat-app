@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import PrevButton from "../components/PrevButton";
 import RadioGroup from "../components/RadioGroup";
-import { genderList } from "../data/common";
+import { genderList, infoContentList } from "../data/common";
 import { initialUserInfo } from "../data/initialState";
+import Input from "../components/Input";
 
 const UserInfo = () => {
   const navigate = useNavigate();
@@ -19,6 +20,11 @@ const UserInfo = () => {
 
   const handleGenderData = (gender) => {
     const resultData = { ...userInfo, gender };
+    setUserInfo(resultData);
+  };
+
+  const handleInfoContent = (label, value) => {
+    const resultData = { ...userInfo, [label]: value };
     setUserInfo(resultData);
   };
 
@@ -41,66 +47,16 @@ const UserInfo = () => {
           />
           {/* START:input 영역 */}
           <div>
-            <div className="py-2 first:pt-0 last:pb-0 ">
-              <div className="relative">
-                <label
-                  htmlFor="name"
-                  className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                      absolute"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="홍길동"
-                  className="border placeholder-gray-400 focus:outline-none
-                      focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
-                      border-date-gray-200 rounded-2xl placeholder:text-date-gray-200"
-                />
-              </div>
-            </div>
-            <div className="py-2 first:pt-0 last:pb-0 ">
-              <div className="relative">
-                <label
-                  htmlFor="age"
-                  className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                      absolute"
-                >
-                  Age
-                </label>
-                <input
-                  type="number"
-                  id="age"
-                  name="age"
-                  placeholder="20"
-                  className="border placeholder-gray-400 focus:outline-none
-                      focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
-                      border-date-gray-200 rounded-2xl placeholder:text-date-gray-200"
-                />
-              </div>
-            </div>
-            <div className="py-2 first:pt-0 last:pb-0 ">
-              <div className="relative">
-                <label
-                  htmlFor="mbti"
-                  className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600
-                      absolute"
-                >
-                  Mbti
-                </label>
-                <input
-                  type="text"
-                  id="mbti"
-                  name="mbti"
-                  placeholder="ENTJ"
-                  className="border placeholder-gray-400 focus:outline-none
-                      focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 mr-0 mb-0 ml-0 text-base block bg-white
-                      border-date-gray-200 rounded-2xl placeholder:text-date-gray-200"
-                />
-              </div>
-            </div>
+            {infoContentList.map((infoContent) => (
+              <Input
+                key={infoContent.id}
+                label={infoContent.label}
+                inputType={infoContent.inputType}
+                text={infoContent.text}
+                placeholder={infoContent.placeholder}
+                onChange={handleInfoContent}
+              />
+            ))}
           </div>
           {/* END:input 영역 */}
         </form>
