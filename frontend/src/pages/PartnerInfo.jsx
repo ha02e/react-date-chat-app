@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { genderList, infoContentList } from "../data/common";
 import { initialPartnerInfo } from "../data/initialState";
 import Input from "../components/Input";
 
-const PartnerInfo = () => {
+const PartnerInfo = ({ handlePartnerInfo }) => {
   const navigate = useNavigate();
 
   //백엔드에 보내줄 데이터
@@ -16,6 +16,7 @@ const PartnerInfo = () => {
 
   const handleClick = () => {
     navigate("/chat");
+    handlePartnerInfo(partnerInfo);
   };
 
   const handleGenderData = (gender) => {
@@ -28,9 +29,9 @@ const PartnerInfo = () => {
     setPartnerInfo(resultData);
   };
 
-  useEffect(() => {
-    console.log("partnerInfo : ", partnerInfo);
-  }, [partnerInfo]); //userInfo 값이 변경될 때마다 콜백함수 실행
+  // useEffect(() => {
+  //   console.log("partnerInfo : ", partnerInfo);
+  // }, [partnerInfo]); //userInfo 값이 변경될 때마다 콜백함수 실행
 
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">

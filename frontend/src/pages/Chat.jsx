@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PrevButton from "../components/PrevButton";
 import MessageBox from "../components/MessageBox";
 
-const Chat = () => {
+const Chat = ({ partnerInfo }) => {
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
 
@@ -14,8 +14,15 @@ const Chat = () => {
       content: value,
     };
 
+    // const assistantResult = {
+    //   role: "assistant",
+    //   content: "저는 chatGPT입니다.",
+    // };
+
     setMessages((prev) => [...prev, result]);
     setValue("");
+
+    // setMessages((prev) => [...prev, assistantResult]);
   };
 
   return (
@@ -24,12 +31,14 @@ const Chat = () => {
       <div className="h-full flex flex-col">
         {/* START:헤더 영역 */}
         <div className="-mx-6 -mt-10 py-7 bg-date-blue-600">
-          <span className="block text-xl text-center text-white">홍길동</span>
+          <span className="block text-xl text-center text-white">
+            {partnerInfo.name}
+          </span>
         </div>
         {/* END:헤더 영역 */}
         {/* START:채팅 영역 */}
         <div className="overflow-auto">
-          <MessageBox messages={messages} />
+          <MessageBox messages={messages} partnerInfo={partnerInfo} />
         </div>
         {/* END:채팅 영역 */}
         {/* START:메시지 입력 영역 */}

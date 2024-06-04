@@ -1,14 +1,21 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import UserInfo from "./pages/UserInfo";
 import PartnerInfo from "./pages/PartnerInfo";
 import Chat from "./pages/Chat";
+import { useState } from "react";
 
 function App() {
-  const history = useNavigate();
+  // const history = useNavigate();
 
-  const goUserInfo = () => {
-    history("/user-info");
+  // const goUserInfo = () => {
+  //   history("/user-info");
+  // };
+
+  const [partnerInfo, setPartnerInfo] = useState();
+
+  const handlePartnerInfo = (data) => {
+    setPartnerInfo(data);
   };
 
   return (
@@ -16,8 +23,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/user-info" element={<UserInfo />} />
-        <Route path="/partner-info" element={<PartnerInfo />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route
+          path="/partner-info"
+          element={<PartnerInfo handlePartnerInfo={handlePartnerInfo} />}
+        />
+        <Route path="/chat" element={<Chat partnerInfo={partnerInfo} />} />
       </Routes>
     </div>
   );
