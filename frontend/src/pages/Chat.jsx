@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import PrevButton from "../components/PrevButton";
+import MessageBox from "../components/MessageBox";
 
 const Chat = () => {
+  const [value, setValue] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const result = {
+      role: "user",
+      content: value,
+    };
+
+    setMessages((prev) => [...prev, result]);
+    setValue("");
+  };
+
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
       <PrevButton />
@@ -13,43 +29,26 @@ const Chat = () => {
         {/* END:헤더 영역 */}
         {/* START:채팅 영역 */}
         <div className="overflow-auto">
-          {/* START:user 채팅 */}
-          <div className="py-4 max-w-3/4 ml-auto text-right">
-            <span className="inline-block px-4 py-3 text-sm rounded-xl text-left bg-date-blue-600 text-white rounded-tr-none">
-              Hello
-            </span>
-          </div>
-          {/* END:user 채팅 */}
-          {/* START:assistant 채팅 */}
-          <div className="py-4 max-w-3/4 flex">
-            <div className="min-w-10 h-10 bg-date-blue-500 rounded-full">
-              <img src="./images/female.svg" alt="" />
-            </div>
-            <div className="pl-3">
-              <span className="text-base font-medium">홍길동</span>
-              <div className="pt-3 pl-2">
-                <span className="inline-block px-4 py-3 text-sm rounded-xl text-left bg-date-gray-100 rounded-tl-none">
-                  Hello ! Nazrul How are you?
-                </span>
-                <span className="block text-right text-date-gray-400 text-xs mt-2 px-2">
-                  09:25 AM
-                </span>
-              </div>
-            </div>
-          </div>
-          {/* END:assistant 채팅 */}
+          <MessageBox messages={messages} />
         </div>
         {/* END:채팅 영역 */}
         {/* START:메시지 입력 영역 */}
         <div className="mt-auto flex py-5 -mx-2 border-t border-gray-100">
-          <div className="w-full px-2 h-full">
+          <form
+            id="sendForm"
+            className="w-full px-2 h-full"
+            onSubmit={handleSubmit}
+          >
             <input
               className="w-full text-sm px-3 py-2 h-full block rounded-xl bg-gray-100 focus:"
               type="text"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
             />
-          </div>
+          </form>
           <button
-            type="button"
+            type="submit"
+            form="sendForm"
             className="w-10 min-w-10 h-10 inline-block rounded-full bg-date-blue-600 text-none px-2 bg-[url('../public/images/send.svg')] bg-no-repeat bg-center"
           >
             보내기
