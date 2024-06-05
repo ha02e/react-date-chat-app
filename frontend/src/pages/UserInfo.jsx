@@ -8,13 +8,14 @@ import { genderList, infoContentList } from "../data/common";
 import { initialUserInfo } from "../data/initialState";
 import Input from "../components/Input";
 
-const UserInfo = () => {
+const UserInfo = ({ handleUserInfo }) => {
   const navigate = useNavigate();
 
   //백엔드에 보내줄 데이터
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 
   const handleClick = () => {
+    handleUserInfo(userInfo);
     navigate("/partner-info");
   };
 

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PrevButton from "../components/PrevButton";
 import MessageBox from "../components/MessageBox";
 
-const Chat = ({ partnerInfo }) => {
+const Chat = ({ userInfo, partnerInfo }) => {
+  const endpoint = process.env.REACT_APP_SERVER_ADDRESS;
+
   const [value, setValue] = useState("");
   const [messages, setMessages] = useState([]);
+  const [infoMessage, setInfoMessage] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -14,16 +17,49 @@ const Chat = ({ partnerInfo }) => {
       content: value,
     };
 
-    // const assistantResult = {
-    //   role: "assistant",
-    //   content: "저는 chatGPT입니다.",
-    // };
+    sendMessage(result);
 
     setMessages((prev) => [...prev, result]);
     setValue("");
-
-    // setMessages((prev) => [...prev, assistantResult]);
   };
+
+  //백엔드에 info 보낼 함수
+  const sendInfo = async () => {
+    // console.log("userInfo >> ", userInfo);
+    try {
+      const response = await fetch(`${endpoint}/info`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userInfo, partnerInfo }),
+      });
+
+      const result = await response.json();
+      setInfoMessage(result.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //Message API 호출
+  const sendMessage = async (userMessage) => {
+    try {
+      const response = await fetch(`${endpoint}/message`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userMessage,
+          messages: [...infoMessage, ...messages],
+        }),
+      });
+
+      const result = await response.json();
+      setMessages((prev) => [...prev, result.data]);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    sendInfo();
+  }, []);
 
   return (
     <div className="w-full h-full px-6 pt-10 break-keep overflow-auto">
